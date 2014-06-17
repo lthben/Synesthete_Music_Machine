@@ -7,32 +7,32 @@
  */
 
 import processing.video.*;
+import java.awt.Frame;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 Capture cam;
+ControlFrame cf; 
+ScanLine scanline;
 
-int NUM_TRACKS = 5; //should range between 1 to 10
+//user defined parameters
 int PLAY_DUR = 30000; //in milliseconds, can range from 1 second onwards 
 int COLOR_DETECTION_THRESHOLD = 20; //sensitivity to detection, should be in range 1 to 50 whereabouts
-
 color[] chosen_colors; //user chosen colors
-int[] detected_colors; //the number of detections of each chosen color. This determines volume per NUM_TRACK.
-int[] colors_yPos; //the average yPos of the detected colors. This determines pitch per NUM_TRACK.
+int[] chosen_sounds;
 
-int scan_line_width = 10; //width of scanning line in pixels. Don't change this.
+final int NUM_TRACKS = 10; //maximum number of sound tracks 
 
 void setup() {
         size(640, 480, P2D);
-
+                
         chosen_colors = new color[NUM_TRACKS];
-        chosen_colors[0] = color(0, 0, 0);
-        chosen_colors[1] = color(255, 0, 0);
-        chosen_colors[2] = color(255, 0, 0);
-        chosen_colors[3] = color(255, 0, 0);
-        chosen_colors[4] = color(255, 0, 0);
+        chosen_sounds = new int[NUM_TRACKS];
         
-        detected_colors = new int[NUM_TRACKS];
-        colors_yPos = new int[NUM_TRACKS];
-
+        for (int i=0; i<NUM_TRACKS; i++) {
+                        chosen_colors[i] = color(0, 0, 0);
+                }
+                
         frameRate(60);
 
         String[] cameras = Capture.list();
@@ -55,6 +55,7 @@ void setup() {
                 // Start capturing the images from the camera
                 cam.start();
         }
+        
 }
 
 void draw() {
@@ -71,7 +72,7 @@ void draw() {
         pushMatrix();
         scale(-1,1);
         tint(255,100);
-        image(cam, -width, 0);
+        //image(cam, -width, 0);
         popMatrix();
         
         run_scan_line();
@@ -90,11 +91,6 @@ void draw() {
         //text("average yPos: " + colors_yPos[0], width - 200, 60);
         
 }
-
-
-float scan_line_xPos;
-int box_size = scan_line_width; //scan line is made up of vertical boxes
-int scan_res = scan_line_width/2; //scan resolution
         
 void run_scan_line() {
         
