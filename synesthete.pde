@@ -69,7 +69,7 @@ void setup() {
         my_GUI = new GUI(this);
 
         oscP5 = new OscP5(this, 12000);
-        myRemoteLocation = new NetAddress("127.0.0.1", 12000);
+        myRemoteLocation = new NetAddress("127.0.0.1", 12001);
 }
 
 void draw() {
@@ -252,9 +252,9 @@ void controlEvent(ControlEvent theEvent) {
                 myString = myString.substring(4, myString.length());
                 int which_bang = Integer.parseInt(myString); //0-9
                 
-                which_preview_msg.add(which_bang);
+                select_preview_msg.add(which_bang);
                 
-                oscP5.send(preview_msg, myRemoteLocation);
+                oscP5.send(select_preview_msg, myRemoteLocation);
                 
         } else if (myString.contains("none")) {
                 float the_value_f = theEvent.value();
