@@ -158,13 +158,13 @@ class GUI {
                 }
 
                 //play button
-                play_button = cp5.addButton("play")
+                play_button = cp5.addButton("play_stop")
                         .setPosition(1320, 260)
                                 .setColorBackground(color(0, 255, 0)) 
                                         .setSize(50, 50)
                                                 ;
 
-                cp5.getController("play").getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE).setPaddingX(2);
+                cp5.getController("play_stop").getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE).setPaddingX(2);
         }
 
         void add_level_one_buttons(MultiList ml, int _index_ml) {
