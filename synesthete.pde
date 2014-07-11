@@ -311,17 +311,16 @@ void oscEvent(OscMessage theOscMessage) {
 
 void play_stop() {
         OscMessage play_msg = new OscMessage("/play");
-        scanline.is_playing = !scanline.is_playing;
+        
         
         if (scanline.is_playing) {
-                my_GUI.play_button.setColorBackground(color(255, 0, 0));
-                play_msg.add(0);
-                
-        } else {
                 my_GUI.play_button.setColorBackground(color(0, 255, 0));
+                play_msg.add(0);                
+        } else {
+                my_GUI.play_button.setColorBackground(color(255, 0, 0));
                 play_msg.add(1);
         }
-        
+        scanline.is_playing = !scanline.is_playing;
         oscP5.send(play_msg, myRemoteLocation);
 }
 
