@@ -58,8 +58,9 @@ void setup() {
                 // from the array returned by list():
                 //    cam = new Capture(this, cameras[0]);
                 // Or, the settings can be defined based on the text in the list
-                cam = new Capture(this, 480, 360, 15); //can set fps here too
-
+//                cam = new Capture(this, 480, 360, 15); //can set fps here too
+                cam = new Capture(this, 480, 360, "HD Pro Webcam C920", 15);
+                
                 // Start capturing the images from the camera
                 cam.start();
         }
