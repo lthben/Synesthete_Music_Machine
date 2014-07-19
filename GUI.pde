@@ -26,13 +26,13 @@ class GUI {
         COL_6_SELECT_BOX = 25, COL_7_SELECT_BOX = 26, COL_8_SELECT_BOX = 27, COL_9_SELECT_BOX = 28, COL_10_SELECT_BOX = 29, 
         NOWHERE_IMPT = 99;
 
-        boolean is_show_color_feedback;
+        boolean is_show_color_feedback; //when mouse hovers over certain regions
 
         int[] select_boxes_state;
         final int EMPTY = 0, PENDING = 1, FULL = 2;
 
         boolean is_ready_for_selection; //palette only accepts clicks when this is true, i.e. when a select box is pending
-        boolean is_lock_colors;//lock colors in palette when clicking inside the cam window, unlock when clicking outside
+        boolean is_lock_colors;//lock colors in palette when clicking inside the cam window, unlock when clicking anywhere again
         int color_to_feedback;//stores the color at mouse cursor locked by mouseclicking inside the cam window
 
         GUI(PApplet parent) {
@@ -504,6 +504,14 @@ class GUI {
                                 }
                         }
                 }
+
+                //show text instruction prompt
+                if (is_ready_for_selection == true) {
+                        textSize(12);
+                        fill(255);
+                        text("select a color below", 1150, 285);
+                        text("click PLAY when done", 1150, 305);
+                }
         }
 
         void show_add_sign(int x, int y) {
@@ -556,6 +564,12 @@ class GUI {
                         strokeWeight(1);
                         rect(100+j*250, yPos+yOffset, 104, 25);
                 }
+                
+                //output window frame
+                noFill();
+                strokeWeight(1);
+                stroke(255);
+                rect(630, 335, 480,360);
         }
 
         void show_color_feedback() {
@@ -599,43 +613,33 @@ class GUI {
                 switch(mouse_is_in) {
                         case(COL_1_SELECT_BOX):
                         enumerate_select_box_state(0);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_2_SELECT_BOX):
                         enumerate_select_box_state(1);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_3_SELECT_BOX):
                         enumerate_select_box_state(2);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_4_SELECT_BOX):
                         enumerate_select_box_state(3);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_5_SELECT_BOX):
                         enumerate_select_box_state(4);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_6_SELECT_BOX):
                         enumerate_select_box_state(5);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_7_SELECT_BOX):
                         enumerate_select_box_state(6);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_8_SELECT_BOX):
                         enumerate_select_box_state(7);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_9_SELECT_BOX):
                         enumerate_select_box_state(8);
-                        is_ready_for_selection = true;
                         break;
                         case(COL_10_SELECT_BOX):
                         enumerate_select_box_state(9);
-                        is_ready_for_selection = true;
                         break;
                         case(CAM_WINDOW):
                         is_lock_colors = !is_lock_colors;
@@ -658,10 +662,14 @@ class GUI {
                         }
 
                         select_boxes_state[index] = PENDING;
+                        is_ready_for_selection = true;
+                        
                 } else if (select_boxes_state[index] == PENDING) {
 
                         select_boxes_state[index] = FULL;
                         is_lock_colors = false;//release the color lock at the palette
+                        is_ready_for_selection = false;
+                        
                 } else if (select_boxes_state[index] == FULL) {
 
                         select_boxes_state[index] = EMPTY;
@@ -715,6 +723,7 @@ class GUI {
         void show_sound_names() {
 
                 fill(255);
+                textSize(12);
 
                 for (int i=0; i<NUM_TRACKS/2; i++) {
                         text(sound_names[i], 215+i*250, 125);
