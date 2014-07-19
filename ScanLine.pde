@@ -111,20 +111,25 @@ class ScanLine {
 
                 IntList detected_indices = new IntList();
 
-                for (int i =0; i < chosen_colors.size (); i++) {
+                //                for (int i =0; i < chosen_colors.size (); i++) {
+                for (int i=0; i<NUM_TRACKS; i++) {
 
-                        int curr_color = chosen_colors.get(i);
-                        int currR = (curr_color >> 16) & 0xFF;
-                        int currG = (curr_color >> 8) & 0xFF;
-                        int currB = curr_color & 0xFF;
+                        //                        int curr_color = chosen_colors.get(i);
+                        if (my_chosen_colors[i] != -1) {
 
-                        if (abs(red(the_color) - currR) <= color_detection_threshold) {
+                                int curr_color = my_chosen_colors[i];
+                                int currR = (curr_color >> 16) & 0xFF;
+                                int currG = (curr_color >> 8) & 0xFF;
+                                int currB = curr_color & 0xFF;
 
-                                if (abs(green(the_color) - currG) <= color_detection_threshold) {
+                                if (abs(red(the_color) - currR) <= color_detection_threshold) {
 
-                                        if (abs(blue(the_color) - currB) <= color_detection_threshold) {
+                                        if (abs(green(the_color) - currG) <= color_detection_threshold) {
 
-                                                detected_indices.append(i);
+                                                if (abs(blue(the_color) - currB) <= color_detection_threshold) {
+
+                                                        detected_indices.append(i);
+                                                }
                                         }
                                 }
                         }
@@ -192,7 +197,8 @@ class ScanLine {
 
                         diameter = map(detected_colors[i], 0, (cam.height-crop_amount*2)/box_size, 0, MAX_DIAMETER);
 
-                        fill(color(chosen_colors.get(i)));
+                        //                        fill(color(chosen_colors.get(i)));
+                        fill(color(my_chosen_colors[i]));
                         ellipse(xPos, yPos, diameter, diameter);
 
                         send_data(i, yPos, diameter);
@@ -200,7 +206,7 @@ class ScanLine {
         }
 
         void send_data(int _index, float _yPos, float _diameter) {
-                
+
                 OscMessage data_msg = new OscMessage("/channel/pitch/volume"); //0-9, 0-cam.height (360), 0-150
 
                 data_msg.add(_index);
