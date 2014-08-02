@@ -1,7 +1,7 @@
 /**
  * Author:         Benjamin Low (Lthben@gmail.com)
- * Date:           June 2014
- * Description:    An application that takes the image seen by a webcam, 
+ * Date:           June-July 2014
+ * Description:    A fun application for SMMF14 that takes the image seen by a webcam, 
  *                 processes the color data and sends out the result 
  *                 to another program that converts the data into sound  
  */
@@ -35,14 +35,14 @@ color[] color_palette;
 void setup() {
         size(1440, 720, P2D); //1440 x 900 
 
-        frameRate(15);
+        frameRate(60);
 
         cursor_mode = CURSOR_OFF;
 
         //chosen_colors = new IntList();
         my_chosen_colors = new int[NUM_TRACKS];
         for (int i=0; i<NUM_TRACKS; i++) {
-                 my_chosen_colors[i] = -1;       
+                 my_chosen_colors[i] = -99;       
         }
 
         chosen_sounds = new int[NUM_TRACKS];
@@ -63,8 +63,8 @@ void setup() {
                 }
 
                 // cam = new Capture(this, cameras[0]);
-                cam = new Capture(this, 480, 360, 15); //can set fps here too
-                //                cam = new Capture(this, 480, 360, "HD Pro Webcam C920", 15);
+//                cam = new Capture(this, 480, 360, 15); //can set fps here too
+                cam = new Capture(this, 480, 360, "HD Pro Webcam C920", 10);
 
                 cam.start();
         }
@@ -300,6 +300,12 @@ void controlEvent(ControlEvent theEvent) {
                         break;
                         case(5): 
                         my_GUI.collection_name = "Musical"; 
+                        break;
+                        case(6): 
+                        my_GUI.collection_name = "Spongebob"; 
+                        break;
+                        case(7): 
+                        my_GUI.collection_name = "Adventure_Time"; 
                         break;
                 }
                 my_GUI.set_sound_names(my_GUI.collection_name);

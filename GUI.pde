@@ -226,7 +226,7 @@ class GUI {
 
                 MultiListButton c;
 
-                for (int index_collection=0; index_collection<6; index_collection++) {
+                for (int index_collection=0; index_collection<8; index_collection++) {
 
                         String indexS = Integer.toString(_index_ml) + Integer.toString(index_collection) + ".0";
                         float index_ml_collection = Float.valueOf(indexS).floatValue();
@@ -252,12 +252,12 @@ class GUI {
                                 case(5):
                                 c.setLabel("musical");
                                 break;
-                                //                                case(6):
-                                //                                c.setLabel("choral");
-                                //                                break;
-                                //                                case(7):
-                                //                                c.setLabel("piano");
-                                //                                break;
+                                case(6):
+                                c.setLabel("spongebob");
+                                break;
+                                case(7):
+                                c.setLabel("adventure_time");
+                                break;
                                 //                                case(8):
                                 //                                c.setLabel("orchestral");
                                 //                                break;
@@ -361,7 +361,7 @@ class GUI {
 
                 //show chosen colors in color boxes
                 for (int i=0; i<5; i++) {
-                        if (my_chosen_colors[i] != -1) {
+                        if (my_chosen_colors[i] != -99) {
                                 color c = color(my_chosen_colors[i]);
                                 fill(c);
                                 noStroke();
@@ -369,7 +369,7 @@ class GUI {
                         }
                 }
                 for (int j=5; j<NUM_TRACKS; j++) {
-                        if (my_chosen_colors[j] != -1) {
+                        if (my_chosen_colors[j] != -99) {
                                 color c = color(my_chosen_colors[j]);   
                                 fill(c);
                                 noStroke();
@@ -379,7 +379,7 @@ class GUI {
 
                 //show feedback on the palette on which colors were chosen 
                 for (int k=0; k<NUM_TRACKS; k++) {
-                        if (my_chosen_colors[k] != -1) {
+                        if (my_chosen_colors[k] != -99) {
                                 int chosen_color_index = my_chosen_colors_indices[k];
                                 color c = color(my_chosen_colors[k]);
                                 fill(c);
@@ -564,12 +564,12 @@ class GUI {
                         strokeWeight(1);
                         rect(100+j*250, yPos+yOffset, 104, 25);
                 }
-                
+
                 //output window frame
                 noFill();
                 strokeWeight(1);
                 stroke(255);
-                rect(630, 335, 480,360);
+                rect(630, 335, 480, 360);
         }
 
         void show_color_feedback() {
@@ -663,23 +663,21 @@ class GUI {
 
                         select_boxes_state[index] = PENDING;
                         is_ready_for_selection = true;
-                        
                 } else if (select_boxes_state[index] == PENDING) {
 
                         select_boxes_state[index] = FULL;
                         is_lock_colors = false;//release the color lock at the palette
                         is_ready_for_selection = false;
-                        
                 } else if (select_boxes_state[index] == FULL) {
 
                         select_boxes_state[index] = EMPTY;
-                        my_chosen_colors[index] = -1;
+                        my_chosen_colors[index] = -99;
                 }
         }
 
         int which_select_box_pending() { 
 
-                int index = -1;
+                int index = -99;
 
                 for (int i=0; i<NUM_TRACKS; i++) {
                         if (select_boxes_state[i] == PENDING) {
@@ -705,11 +703,15 @@ class GUI {
                         index_offset = 40;
                 } else if (_collection_name.equals("Musical")) {
                         index_offset = 50;
+                } else if (_collection_name.equals("Spongebob")) {
+                        index_offset = 60;
+                } else if (_collection_name.equals("Adventure_Time")) {
+                        index_offset = 70;
                 } else if (_collection_name.equals("")) {
-                        index_offset = -1;
+                        index_offset = -99;
                 }
 
-                if (index_offset != -1) {
+                if (index_offset != -99) {
                         for (int i=0; i<10; i++) {
                                 sound_names[i] = get_sound_name(i + index_offset);
                         }
@@ -741,31 +743,31 @@ class GUI {
 
                         if (x > 100 && x <= 150) {
                                 mouse_is_in = COL_1_BOX; 
-                                if (my_chosen_colors[0] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[0] != -99) is_show_color_feedback = true;
                         } else if (x > 150 && x <= 205) {
                                 mouse_is_in = COL_1_SELECT_BOX; 
                                 is_show_color_feedback = false;
                         } else if (x > 350 && x <= 400) {
                                 mouse_is_in = COL_2_BOX; 
-                                if (my_chosen_colors[1] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[1] != -99) is_show_color_feedback = true;
                         } else if (x > 400 && x <= 455) {
                                 mouse_is_in = COL_2_SELECT_BOX; 
                                 is_show_color_feedback = false;
                         } else if (x > 600 && x <= 650) {
                                 mouse_is_in = COL_3_BOX;
-                                if (my_chosen_colors[2] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[2] != -99) is_show_color_feedback = true;
                         } else if (x > 650 && x <= 705) {
                                 mouse_is_in = COL_3_SELECT_BOX;
                                 is_show_color_feedback = false;
                         } else if (x > 850 && x <= 900) {
                                 mouse_is_in = COL_4_BOX;
-                                if (my_chosen_colors[3] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[3] != -99) is_show_color_feedback = true;
                         } else if (x > 900 && x <= 955) {
                                 mouse_is_in = COL_4_SELECT_BOX;
                                 is_show_color_feedback = false;
                         } else if (x > 1100 && x <= 1150) {
                                 mouse_is_in = COL_5_BOX;
-                                if (my_chosen_colors[4] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[4] != -99) is_show_color_feedback = true;
                         } else if (x > 1150 && x <= 1205) {
                                 mouse_is_in = COL_5_SELECT_BOX;
                                 is_show_color_feedback = false;
@@ -777,31 +779,31 @@ class GUI {
 
                         if (x > 100 && x <= 150) {
                                 mouse_is_in = COL_6_BOX;
-                                if (my_chosen_colors[5] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[5] != -99) is_show_color_feedback = true;
                         } else if (x > 150 && x <= 205) {
                                 mouse_is_in = COL_6_SELECT_BOX; 
                                 is_show_color_feedback = false;
                         } else if (x > 350 && x <= 400) {
                                 mouse_is_in = COL_7_BOX;
-                                if (my_chosen_colors[6] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[6] != -99) is_show_color_feedback = true;
                         } else if (x > 400 && x <= 455) {
                                 mouse_is_in = COL_7_SELECT_BOX;
                                 is_show_color_feedback = false;
                         } else if (x > 600 && x <= 650) {
                                 mouse_is_in = COL_8_BOX;
-                                if (my_chosen_colors[7] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[7] != -99) is_show_color_feedback = true;
                         } else if (x > 650 && x <= 705) {
                                 mouse_is_in = COL_8_SELECT_BOX;
                                 is_show_color_feedback = false;
                         } else if (x > 850 && x <= 900) {
                                 mouse_is_in = COL_9_BOX;
-                                if (my_chosen_colors[8] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[8] != -99) is_show_color_feedback = true;
                         } else if (x > 900 && x <= 955) {
                                 mouse_is_in = COL_9_SELECT_BOX;
                                 is_show_color_feedback = false;
                         } else if (x > 1100 && x <= 1150) {
                                 mouse_is_in = COL_10_BOX;
-                                if (my_chosen_colors[9] != -1) is_show_color_feedback = true;
+                                if (my_chosen_colors[9] != -99) is_show_color_feedback = true;
                         } else if (x > 1150 && x <= 1205) {
                                 mouse_is_in = COL_10_SELECT_BOX;
                                 is_show_color_feedback = false;
@@ -948,6 +950,47 @@ class GUI {
                         return("sax"); 
                         case(59): 
                         return("trumpet"); 
+                        case(60):
+                        return("meow");
+                        case(61):
+                        return("baa laugh");
+                        case(62):
+                        return("testing testing");
+                        case(63):
+                        return("pizza ow ow");
+                        case(64):
+                        return("fun is all about");
+                        case(65):
+                        return("aye aye captain");
+                        case(66):
+                        return("spongybob squarepants");
+                        case(67):
+                        return("maniac laughter");
+                        case(68):
+                        return("oh woooo");
+                        case(69):
+                        return("long soundtrack");
+                        case(70):
+                        return("oh my glob");
+                        case(71):
+                        return("shake my fanny");
+                        case(72):
+                        return("short tune");
+                        case(73):
+                        return("living so merrily");
+                        case(74):
+                        return("punch your buns");
+                        case(75):
+                        return("come along with me");
+                        case(76):
+                        return("exciting intro");
+                        case(77):
+                        return("this lump");
+                        case(78):
+                        return("talentless I win");
+                        case(79):
+                        return("adventure time");
+
                 default: 
                         return ("song" + _index);
                 }

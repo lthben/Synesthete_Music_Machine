@@ -115,7 +115,7 @@ class ScanLine {
                 for (int i=0; i<NUM_TRACKS; i++) {
 
                         //                        int curr_color = chosen_colors.get(i);
-                        if (my_chosen_colors[i] != -1) {
+                        if (my_chosen_colors[i] != -99) {
 
                                 int curr_color = my_chosen_colors[i];
                                 int currR = (curr_color >> 16) & 0xFF;
