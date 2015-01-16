@@ -35,7 +35,7 @@ color[] color_palette;
 void setup() {
         size(1440, 720, P2D); //1440 x 900 
 
-        frameRate(60);
+        frameRate(10);
 
         cursor_mode = CURSOR_OFF;
 
